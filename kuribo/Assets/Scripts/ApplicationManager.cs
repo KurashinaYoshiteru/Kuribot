@@ -23,9 +23,16 @@ public class ApplicationManager : MonoBehaviour
     //終了ボタンクリック時の処理
     public void OnClickCloseAppButton()
     {
-        //認識音声をファイル出力
-        string outputText = DemoMic.GetComponent<ASRManager>().userText.text;
-        WriteFile(outputText, path);
+        try
+        {
+            //認識音声をファイル出力
+            string outputText = DemoMic.GetComponent<ASRManager>().userText.text;
+            WriteFile(outputText, path);
+        }
+        catch (Exception e)
+        {
+            Application.Quit();
+        }
 
         //アプリ終了
         Application.Quit();

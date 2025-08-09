@@ -54,11 +54,22 @@ public class MovableTransparentWindow : MonoBehaviour
 
 	bool movable = false;
 	POINT cursorPosition;
+
+	[DllImport("user32.dll")]
+	static extern short GetAsyncKeyState(int vKey);
+	const int VK_LBUTTON = 0x01;
+
 	void Update()
 	{
+		// マウスが物理的に押されていない状態なら強制解除
+		if ((GetAsyncKeyState(VK_LBUTTON) & 0x8000) == 0)
+		{
+			movable = false;
+		}
+
 		if (Input.GetKey(KeyCode.Escape))
 		{
-			//Application.Quit();
+			Application.Quit();
 		}
 
 		if (Input.GetMouseButtonDown(0))
